@@ -73,8 +73,15 @@ export class PokemonService {
     return { ...pokemon.toJSON(), ...updatePokemonDto };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+  async remove(_id: string) {
+    // If we want to delete by name or other parameter we can use this commented code
+    // const pokemon = await this.findOne(id);
+    // await pokemon.deleteOne();
+    const { deletedCount } = await this.pokemonModel.deleteOne({ _id });
+
+    if (deletedCount === 0) {
+      throw new BadRequestException(`Pokemon with id ${_id} not found`);
+    }
   }
 
   // For uncontrolled exceptions
