@@ -3,7 +3,7 @@ import { PokeResponse } from './interface/poke-response.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { Pokemon } from 'src/pokemon/entities/pokemon.entity';
 import { Model } from 'mongoose';
-const URL = 'https://pokeapi.co/api/v2/pokemon?limit=10';
+const URL = 'https://pokeapi.co/api/v2/pokemon?limit=650';
 
 @Injectable()
 export class SeedService {
@@ -13,6 +13,7 @@ export class SeedService {
   ) {}
 
   async executeSeed() {
+    await this.pokemonModel.deleteMany({});
     const data: PokeResponse = await (await fetch(URL)).json();
     const pokemonList = data.results.map(({ name, url }) => {
       const segments = url.split('/');
@@ -22,6 +23,6 @@ export class SeedService {
 
     await this.pokemonModel.insertMany(pokemonList);
 
-    return pokemonList;
+    return 'Seed executed';
   }
 }
