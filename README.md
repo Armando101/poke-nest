@@ -20,6 +20,7 @@ docker-compose up -d
 5. Clone file __.env.template__ and rename to __.env__
 
 6. Fill the environment variables defined in __.env__
+
 7. Execute dev envirnoment
 ```
 npm run start:dev
@@ -29,6 +30,14 @@ npm run start:dev
 ```
 http://localhost:3000/api/v2/seed
 ```
+# Production build
+1. Create __.env.prod__ file
+2. Fill environment variables for production
+3. Create the new docker image
+```docker
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+```
+
 
 ## Stack
 * MongoDB
